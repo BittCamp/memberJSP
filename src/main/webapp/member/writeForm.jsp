@@ -104,7 +104,9 @@ table {
 		
 		<tr>
 			<th colspan="2">
-				<button type="button" id="writeBtn" >회원가입</button>
+				<button type="button" id="writeBtn" >회원가입</button>	
+				<input type="hidden" id="idChk" name="idChk" >
+				<input type="hidden" id="idChk1" name="idChk1" >
 				<button type="reset">다시작성</button>
 			</th>
 		</tr>
@@ -122,7 +124,12 @@ function checkId() {
 	else 
 		window.open("checkId.jsp?id="+ id,"checkId", "width=400 height=150 top=300 left=900"); /* + id자바스크립트구역이라 구분자 +id 써줘야됨.  "checkId.jsp?id= " 여기 공백이 들어갔어서 오류가 나왔다. */
 	
+	
+	
 }
+
+
+
 </script>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.7.0.min.js"></script>

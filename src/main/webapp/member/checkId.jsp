@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.dao.MemberDAO" %> <!--  둘중에 편한거 써라.-->
-<%-- <%@ page import="member.dao.MemberDAO" %> --%>
+<%-- <%@ page import="member.dao.MemberDAO" %> --%><!-- [ 김찬영  2023-09-1 오후 12:33:40 ]s -->
 <% 
 	String id = request.getParameter("id");
 	// DB에 가서 실제 값이 있는지 확인. 필요한 jar파일부터 먼저 받아와야되. ojdbc11.jar랑 롬복가져와라.
@@ -31,6 +31,8 @@ function checkIdClose(id) {
 	opener.document.getElementById("id").value = id;
 	window.close();
 	opener.document.getElementById("pwd").focus();
+	opener.document.getElementById("idChk").value = id;
+	opener.document.getElementById("idChk1").value = id;
 }
 
 

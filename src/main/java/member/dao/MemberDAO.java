@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import member.dto.MemberDTO;
 
@@ -63,6 +66,71 @@ public class MemberDAO {
 		
 		return exist;
 	}
+	
+	public boolean login(String id, String pwd ) {
+		boolean exist = false;
+		String sql = "select * from member where id = ? and pwd = ?";
+		getConnection();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) exist = true; 
+	       
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return exist;
+	}
+	public List<MemberDTO> select() {
+		List<MemberDTO> list = new ArrayList<MemberDTO>(); //부모 = 자식(다형성) 
+		
+		
+		String sql = "select name from member where id = ? and pwd = ?"; 
+																									
+		
+		getConnection();//접속
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();//실행.
+			
+			while(rs.next()) {
+				MemberDTO memberDTO = new MemberDTO();
+				memberDTO.setName( rs.getString("name"));
+				memberDTO.setPwd( rs.getString("pwd"));
+				
+				list.add(memberDTO);
+			}//while 현재 값이 없을때 까지 반복
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			list = null;
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+		
+		return list;
+	}
+	
 	public void write(MemberDTO memberDTO) {
 		String sql = "insert into member values(?,?,?,?,?,?,?,?,?,?,?,?,sysdate)";
 		
