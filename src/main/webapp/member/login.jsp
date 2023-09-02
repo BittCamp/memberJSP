@@ -3,10 +3,14 @@
 <% 	
 	String id = request.getParameter("id");
 	String pwd = request.getParameter("pwd");
-	
+	String name = "";
 	//DB
 	MemberDAO memberDAO = new MemberDAO();
-	boolean exist = memberDAO.login(id, pwd); 
+	MemberDTO memberDTO = new MemberDTO();
+	memberDTO  = memberDAO.login(id, pwd);
+	name = memberDTO.getName();
+	
+	
 	
 %>
 <!DOCTYPE html>
@@ -18,8 +22,8 @@
 <body>
 
 <% response.setContentType("text/html;charset=UTF-8"); %>
-<% if(exist){ %>
-	<h3> <%=id %> 님 로그인 </h3>	
+<% if( !name.equals(null)){ %>
+	<h3> <%=name %> 님 로그인 </h3>	
 <% } else {%> 
 	<h3> 아이디 또는 비밀번호가 틀렸으니 다시 로그인 하세요.</h3>	
 <% } %>

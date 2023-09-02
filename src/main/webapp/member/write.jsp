@@ -50,5 +50,6 @@
 <% response.setContentType("text/html;charset=UTF-8"); %>
 
 <h3>회원가입 성공</h3>
+<input type="button" onclick="location.href='loginForm.jsp'" value="로그인으로 이동">
 </body>
 </html>

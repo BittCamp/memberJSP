@@ -67,57 +67,26 @@ public class MemberDAO {
 		return exist;
 	}
 	
-	public boolean login(String id, String pwd ) {
-		boolean exist = false;
-		String sql = "select * from member where id = ? and pwd = ?";
-		getConnection();
+	
+	public MemberDTO login(String id, String pwd) {
+		MemberDTO memberDTO = new MemberDTO();
+		String sql = "SELECT NAME FROM MEMBER WHERE ID = ? AND PWD = ?"; 
+																									
 		
+		getConnection();//접속
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) exist = true; 
-	       
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(rs != null) rs.close();
-				if(pstmt != null) pstmt.close();
-				if(conn != null) conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return exist;
-	}
-	public List<MemberDTO> select() {
-		List<MemberDTO> list = new ArrayList<MemberDTO>(); //부모 = 자식(다형성) 
-		
-		
-		String sql = "select name from member where id = ? and pwd = ?"; 
-																									
-		
-		getConnection();//접속
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();//실행.
 			
-			while(rs.next()) {
-				MemberDTO memberDTO = new MemberDTO();
+			if(rs.next()) {
 				memberDTO.setName( rs.getString("name"));
-				memberDTO.setPwd( rs.getString("pwd"));
 				
-				list.add(memberDTO);
 			}//while 현재 값이 없을때 까지 반복
-			
+			System.out.println("MemberDAO"+rs.getString("name"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			list = null;
 		} finally {
 			try {
 				if(rs != null) rs.close();
@@ -128,7 +97,7 @@ public class MemberDAO {
 			}
 	}
 		
-		return list;
+		return memberDTO;
 	}
 	
 	public void write(MemberDTO memberDTO) {
